@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stock Market Visualization</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <header class="topbar">
+        <h1>📊Dashboard for stock market</h1>
+        <div class="controls">
+            <label class="sr-only" for="symbolSelect">Symbol</label>
+            <select id="symbolSelect" title="Select stock symbol" aria-label="Select stock symbol">
+                <option value="AAPL" selected>AAPL</option>
+                <option value="MSFT">MSFT</option>
+                <option value="GOOGL">GOOGL</option>
+                <option value="TSLA">TSLA</option>
+                <option value="AMZN">AMZN</option>
+                <option value="NVDA">NVDA</option>
+            </select>
+
+            <!-- 🔻 API 키 입력 UI 제거 -->
+            <!-- <input id="apiKeyInput" type="password" placeholder="Alpha Vantage API Key" /> -->
+            <!-- <button id="saveKeyBtn" aria-label="Save API Key">Save Key</button> -->
+
+            <button id="refreshBtn" aria-label="Refresh data">Refresh</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="status" class="status hidden"></div>
+        <!-- ✅ 1. Markets Today Section -->
+        <section class="markets-today">
+            <h2>Markets Today</h2>
+
+            <div class="markets-today-grid">
+
+                <div class="mt-card">
+                    <div class="mt-label">Market</div>
+                    <div id="mtMarket" class="mt-value">-</div>
+                </div>
+
+                <div class="mt-card">
+                    <div class="mt-label">Leader</div>
+                    <div id="mtLeader" class="mt-value">-</div>
+                </div>
+
+                <div class="mt-card">
+                    <div class="mt-label">Top Stock</div>
+                    <div id="mtTopName" class="mt-value">-</div>
+                    <div id="mtTopPct" class="mt-percent">-</div>
+                </div>
+
+                <div class="mt-card">
+                    <div class="mt-label">Worst Stock</div>
+                    <div id="mtWorstName" class="mt-value">-</div>
+                    <div id="mtWorstPct" class="mt-percent">-</div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ✅ 2. Market Summary Section -->
+        <section class="card" id="marketSummarySection">
+            <h2>Market Summary</h2>
+            <div class="table-wrap">
+                <table class="data-table market-summary-table" aria-label="Market Summary">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Price</th>
+                            <th>Change</th>
+                            <th>% Change</th>
+                        </tr>
+                    </thead>
+                    <tbody id="marketSummaryBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ✅ 3. Biggest Gainers & Losers Section -->
+        <section class="card" id="activeStocksSection">
+            <h2>Biggest Gainers &amp; Losers</h2>
+            <div class="active-stocks-grid">
+                <!-- Biggest Gainers -->
+                <div class="active-block">
+                    <h3>Biggest Gainers</h3>
+                    <div class="table-wrap">
+                        <table class="data-table active-table" aria-label="Biggest Gainers">
+                            <thead>
+                                <thead>
+                                    <tr>
+                                        <th>Company</th>
+                                        <th>Price</th>
+                                        <th>Change</th>
+                                        <th>Change %</th>
+                                        <th>Volume</th>
+                                    </tr>
+                                </thead>
+                            </thead>
+                            <tbody id="gainersBody">
+                                <!-- /stock-api/active-stocks biggestGainers 데이터 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Biggest Losers -->
+                <div class="active-block">
+                    <h3>Biggest Losers</h3>
+                    <div class="table-wrap">
+                        <table class="data-table active-table" aria-label="Biggest Losers">
+                            <thead>
+                                <thead>
+                                    <tr>
+                                        <th>Company</th>
+                                        <th>Price</th>
+                                        <th>Change</th>
+                                        <th>% Change</th>
+                                        <th>Volume</th>
+                                    </tr>
+                                </thead>
+                            </thead>
+                            <tbody id="losersBody">
+                                <!-- /stock-api/active-stocks biggestLosers 데이터 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+    <footer class="footer">
+        <span>Built with HTML • CSS • Chart.js • MongoDB • FastAPI</span>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
